@@ -11,4 +11,8 @@ public class OutputView {
         System.out.println("상품명\t\t수량\t금액");
     }
 
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
+
 }

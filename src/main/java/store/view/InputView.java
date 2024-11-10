@@ -9,9 +9,13 @@ public class InputView {
         return Console.readLine();
     }
 
-    public String getMembershipDiscount() {
+    public Boolean getMembershipDiscount() {
         System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
-        return Console.readLine();
+        if (Console.readLine().equals("Y")) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+//        return Console.readLine();
     }
 
     public String getWantAnotherProducts() {
@@ -24,9 +28,12 @@ public class InputView {
         return Console.readLine();
     }
 
-    public String getConfirmAddFreeProducts() {
-        System.out.println("현재 오렌지주스은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
-        return Console.readLine();
+    public Boolean getConfirmAddFreeProducts() {
+//        System.out.println("현재 오렌지주스은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
+        if (Console.readLine().equals("Y")) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
 }
