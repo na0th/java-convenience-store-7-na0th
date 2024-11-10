@@ -1,9 +1,16 @@
 package store;
 
+import store.config.AppConfig;
+import store.controller.OrderController;
 import store.dto.request.OrderRequest;
 import store.model.Product;
 import store.model.Promotion;
 import store.model.PromotionChecker;
+import store.model.WareHouse;
+import store.util.Parser;
+import store.view.InputView;
+import store.view.OutputView;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,12 +19,29 @@ import java.nio.file.Paths;
 
 import java.time.LocalDate;
 import java.util.*;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        AppConfig appConfig = new AppConfig();
+        OrderController orderController = appConfig.orderController();
+
+        orderController.run();
+
+
+
+//        Map<String, Product> products = productFileHandle();
+//        System.out.println();
+//        WareHouse wareHouse = new WareHouse(products);
+//        wareHouse.getAllProducts();
+//
+//        System.out.println();
+//        List<Promotion> promotions = promotionFileHandle();
+//        PromotionChecker promotionChecker = new PromotionChecker(promotions);
+//        promotionChecker.getAllPromotions();
+
     }
 
-    private static Map<String, Product> productFileHandle() {
+    public static Map<String, Product> productFileHandle() {
         Path filePath = Paths.get("src/main/resources/products.md");
         Map<String, Product> products = new LinkedHashMap<>();
         try {
@@ -48,7 +72,7 @@ public class Application {
         return products;
     }
 
-    private static List<Promotion> promotionFileHandle() {
+    public static List<Promotion> promotionFileHandle() {
         Path filePath = Paths.get("src/main/resources/promotions.md");
         Map<String, Promotion> promotions = new LinkedHashMap<>();
 
