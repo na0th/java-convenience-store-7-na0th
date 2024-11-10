@@ -54,6 +54,21 @@ public class Product {
         promotionStock += quantity;
     }
 
+    public Boolean canProvideFreeItem() {
+        return promotionStock >= 1;
+    }
+
+    public int sumRegularAndPromotionQuantity() {
+        return regularStock + promotionStock;
+    }
+    public int getNonPromotionQuantity(int quantity, int promotionGroupSize) {
+        int maxPromotionQuantity = (promotionStock / promotionGroupSize) * promotionGroupSize;
+        int processedQuantity = Math.min(quantity, maxPromotionQuantity);
+        int nonPromotionStock = quantity - processedQuantity;
+
+        return nonPromotionStock;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
