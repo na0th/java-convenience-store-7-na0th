@@ -11,19 +11,25 @@ public class PromotionChecker {
         this.promotions = promotions;
     }
 
-    //이게 굳이 필요한가..
-//    public boolean isPromotionAvailable(String promotionName) {
-//        for (Promotion promotion : promotions) {
-//            if (promotion.getPromotionName().equals(promotionName)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public int calculateFreeItems(String promotionName, int quantity) {
+        Promotion foundPromotion = findByPromotionName(promotionName);
+        int freeItem = foundPromotion.calculateFreeItem(quantity);
+        return freeItem;
+    }
+    public Promotion findByPromotionName(String promotionName) {
+        for (Promotion promotion : promotions) {
+            if (promotion.getPromotionName().equals(promotionName)) {
+                return promotion;
+            }
+
+        }
+        throw new IllegalArgumentException("존재하지 않는 promotion: " + promotionName);
+    }
 
     public boolean isPromotionValid(String promotionName) {
         for (Promotion promotion : promotions) {
             if (promotion.getPromotionName().equals(promotionName) && promotion.isWithinValidDate(LocalDate.now())) {
+//            if (promotion.getPromotionName().equals(promotionName) && promotion.isWithinValidDate(FIXED_DATE)) {
                 return true;
             }
         }

@@ -1,5 +1,6 @@
 package store.model;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class PromotionCheckerTest {
         );
         Promotion promotion2 = new Promotion(
                 "testPromotion2",
-                "1",
+                "2",
                 "1",
                 LocalDate.of(2025, 11, 1),
                 LocalDate.of(2025, 12, 31)
@@ -33,7 +34,6 @@ class PromotionCheckerTest {
         List<Promotion> promotions = List.of(promotion1, promotion2);
         promotionChecker = new PromotionChecker(promotions);
     }
-    //굳이 테스트 할 필요 있나? promotionChecker는 아니다 테스트해야함
 
     @Test
     @DisplayName("주문 상품이 프로모션에 해당하고, 프로모션 기간이면 True를 반환")
@@ -56,6 +56,18 @@ class PromotionCheckerTest {
         //given
         //when & then
         assertFalse(promotionChecker.isPromotionValid("notPromotionProduct"));
+    }
+
+    @Test
+    @DisplayName("calculateFreeItems 메서드 테스트")
+    void 프로모션의_buy_get에_따라서_free_item이_제대로_계산되면_성공한다() {
+        //given
+        //when&then
+        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",8));
+        Assertions.assertThat(1).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",7));
+        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",6));
+        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion2",6));
+        Assertions.assertThat(1).isEqualTo(promotionChecker.calculateFreeItems("testPromotion2",5));
     }
 
 
