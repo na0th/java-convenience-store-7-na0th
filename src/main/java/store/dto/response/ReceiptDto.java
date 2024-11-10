@@ -10,8 +10,11 @@ public class ReceiptDto {
         return receiptSingleDtos;
     }
 
-    public void addReceipt(ReceiptSingleDto receiptSingleDto) {
+    public void addSingleReceipt(ReceiptSingleDto receiptSingleDto) {
         receiptSingleDtos.add(receiptSingleDto);
+    }
+    public void addAllReceipts(List<ReceiptSingleDto> receipts) {
+        receiptSingleDtos.addAll(receipts);
     }
 
     @Override
