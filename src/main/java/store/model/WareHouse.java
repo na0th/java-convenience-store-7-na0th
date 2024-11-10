@@ -44,6 +44,10 @@ public class WareHouse {
     }
 
     private ReceiptSingleDto decrementPromotionStock(Product product, int quantity) {
+//        int group = product.sumRegularAndPromotionQuantity();
+//        int nonPromotionQuantity = product.getNonPromotionQuantity(quantity, group);
+
+//        if (unprocessedStock > ) {}
         System.out.println("프로모션 재고 처리 구현 해야 함");
 //        return ReceiptSingleDto.create(product, quantity, 0);
         return null;

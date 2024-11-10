@@ -23,9 +23,12 @@ public class InputView {
         return Console.readLine();
     }
 
-    public String getConfirmPurchaseWithoutPromotion() {
-        System.out.println("현재 콜라 4개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)");
-        return Console.readLine();
+    public Boolean getConfirmPurchaseWithoutPromotion(String productName, int nonPromotionQuantity) {
+        System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N): ", productName, nonPromotionQuantity);
+        if (Console.readLine().equals("Y")) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     public Boolean getConfirmAddFreeProducts() {
