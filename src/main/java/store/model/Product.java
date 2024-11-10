@@ -46,6 +46,25 @@ public class Product {
         regularStock -= quantity;
     }
 
+    public void incrementRegularStock(int quantity) {
+        regularStock += quantity;
+    }
+
+    public void incrementPromotionStock(int quantity) {
+        promotionStock += quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", regularStock=" + regularStock +
+                ", promotionStock=" + promotionStock +
+                ", promotionName='" + promotionName + '\'' +
+                '}';
+    }
+
 
 
 }

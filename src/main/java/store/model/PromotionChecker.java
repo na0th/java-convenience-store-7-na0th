@@ -30,5 +30,11 @@ public class PromotionChecker {
         return false;
     }
 
+    public void getAllPromotions() {
+        for (Promotion promotion : promotions) {
+            System.out.println(promotion);
+        }
+    }
+
 
 }

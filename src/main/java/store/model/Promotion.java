@@ -31,4 +31,15 @@ public class Promotion {
     public boolean hasPromotionName(String name) {
         return promotionName.equals(name);
     }
+
+    @Override
+    public String toString() {
+        return "Promotion{" +
+                "promotionName='" + promotionName + '\'' +
+                ", buy=" + buy +
+                ", get=" + get +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
