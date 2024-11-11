@@ -42,4 +42,8 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public void displayReceipt(String receipt) {
+        System.out.println(receipt);
+    }
+
 }

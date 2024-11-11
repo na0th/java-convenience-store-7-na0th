@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PromotionCheckerTest {
     private Promotions promotions;
-    List<Promotion> promotions;
+    List<Promotion> promotionList;
     @BeforeEach
     void setUp() {
         Promotion promotion1 = new Promotion(
