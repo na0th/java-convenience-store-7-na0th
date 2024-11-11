@@ -60,7 +60,7 @@ public class DiscountCalculator {
         finalAmount -= promotionDiscountAmount;
         receiptBuilder.append("====================================\n");
         receiptBuilder.append("총구매액\t\t").append(totalItems).append("\t\t").append(numberFormat.format(totalRegularAmount + totalPromotionAmount)).append("\n");
-        receiptBuilder.append("행사할인\t\t[콜라-3],[에너지바-5]-").append(numberFormat.format(promotionDiscountAmount)).append("\n");
+        receiptBuilder.append("행사할인\t\t-").append(numberFormat.format(promotionDiscountAmount)).append("\n");
         receiptBuilder.append("멤버십할인\t\t-").append(numberFormat.format(memberShipDiscountAmount)).append("\n");
         receiptBuilder.append("내실돈\t\t").append(numberFormat.format(finalAmount)).append("\n");
         receiptBuilder.append("====================================\n");
