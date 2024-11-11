@@ -10,7 +10,9 @@ public class OutputView {
     public void printProducts(Map<String, Product> products) {
         System.out.println("안녕하세요. W편의점입니다.");
         System.out.println("현재 보유하고 있는 상품입니다.\n");
+
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
+
         for (Map.Entry<String, Product> entry : products.entrySet()) {
             Product product = entry.getValue();
             String name = product.getName();

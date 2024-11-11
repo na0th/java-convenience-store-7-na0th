@@ -79,17 +79,6 @@ public class Product {
         return nonPromotionStock;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", regularStock=" + regularStock +
-                ", promotionStock=" + promotionStock +
-                ", promotionName='" + promotionName + '\'' +
-                '}';
-    }
-
 
 
 }

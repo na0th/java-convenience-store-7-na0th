@@ -29,7 +29,6 @@ public class InputView {
     }
 
     public Boolean getConfirmAddFreeProducts() {
-//        System.out.println("현재 오렌지주스은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
         String input = Console.readLine();
         return Parser.parseYesOrNo(input);
     }

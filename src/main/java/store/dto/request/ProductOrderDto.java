@@ -17,13 +17,6 @@ public class ProductOrderDto {
         return productQuantity;
     }
 
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "productName='" + productName + '\'' +
-                ", productQuantity=" + productQuantity +
-                '}';
-    }
 
     public static ProductOrderDto create(String productName, Integer productQuantity) {
         return new ProductOrderDto(productName, productQuantity);

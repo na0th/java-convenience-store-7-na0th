@@ -22,12 +22,4 @@ public class OrderRequest {
         return new OrderRequest(products);
     }
 
-    @Override
-    public String toString() {
-        return "OrderRequest {\n" +
-                "  products:\n" + products.stream()
-                .map(product -> "    " + product.toString())
-                .collect(Collectors.joining(",\n")) +
-                "\n}";
-    }
 }

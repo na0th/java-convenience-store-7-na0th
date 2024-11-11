@@ -35,7 +35,6 @@ public class Promotion {
         return (currentDate.isEqual(startDate) || currentDate.isAfter(startDate)) &&
                 (currentDate.isEqual(endDate) || currentDate.isBefore(endDate));
     }
-    //테스트 필수
     public int calculateFreeItem(int quantity) {
         int buyCount = Integer.parseInt(buy);
         int getCount = Integer.parseInt(get);
@@ -51,20 +50,5 @@ public class Promotion {
         }
 
         return NO_FREE_ITEM;
-    }
-
-    public boolean hasPromotionName(String name) {
-        return promotionName.equals(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Promotion{" +
-                "promotionName='" + promotionName + '\'' +
-                ", buy=" + buy +
-                ", get=" + get +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
     }
 }
