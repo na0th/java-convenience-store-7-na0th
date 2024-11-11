@@ -6,18 +6,22 @@ import store.dto.response.ReceiptDto;
 import store.dto.response.ReceiptSingleDto;
 import store.model.*;
 import store.model.stockProcessStrategy.PromotionStockStrategy;
+import store.view.InputView;
 
 public class OrderService {
     private WareHouse wareHouse;
     private DiscountCalculator discountCalculator;
     private PromotionChecker promotionChecker;
     private StockProcessorFactory stockProcessorFactory;
+    private InputView inputView;
 
     public OrderService(WareHouse wareHouse, DiscountCalculator discountCalculator, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory) {
+    public OrderService(WareHouse wareHouse, DiscountCalculator discountCalculator, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory, InputView inputView) {
         this.wareHouse = wareHouse;
         this.discountCalculator = discountCalculator;
         this.promotionChecker = promotionChecker;
         this.stockProcessorFactory = stockProcessorFactory;
+        this.inputView = inputView;
     }
 
     public String generatePromotionAvailabilityMessage (OrderRequest orderRequest) {
@@ -41,6 +45,7 @@ public class OrderService {
     }
 
     public void purchase(OrderRequest orderRequest, Boolean applyDiscount, Boolean acceptFreeItem) {
+    public void finalPurchase(OrderRequest orderRequest, Boolean applyDiscount, Boolean acceptFreeItem) {
         ReceiptDto receiptDto = new ReceiptDto();
 
         for (ProductOrderDto productOrder : orderRequest.getProducts()) {

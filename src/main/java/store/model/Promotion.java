@@ -27,6 +27,10 @@ public class Promotion {
         return promotionName;
     }
 
+    public int calculatePromotionGroupSize() {
+        return Integer.parseInt(buy) + Integer.parseInt(get);
+    }
+
     public boolean isWithinValidDate(LocalDate currentDate) {
         return (currentDate.isEqual(startDate) || currentDate.isAfter(startDate)) &&
                 (currentDate.isEqual(endDate) || currentDate.isBefore(endDate));

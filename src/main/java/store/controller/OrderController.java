@@ -35,27 +35,27 @@ public class OrderController {
         if (!message.isEmpty()) {
             outputView.showMessage(message);
             boolean acceptExtra = inputView.getConfirmAddFreeProducts();
-            orderService.purchase(orderRequest, applyDiscount, acceptExtra);
+            orderService.finalPurchase(orderRequest, applyDiscount, acceptExtra);
         } else {
-            orderService.purchase(orderRequest, applyDiscount, false);
+            orderService.finalPurchase(orderRequest, applyDiscount, false);
         }
     }
 
-    public ReceiptSingleDto handlePurchaseRequest(Product product, int quantity) {
-        int nonPromotionQuantity = orderService.calculateNonPromotionQuantity(product, quantity);
 
-        boolean proceedWithPurchase = true;
-        if (nonPromotionQuantity > 0) {
-            proceedWithPurchase = agreesToNonPromotion(product, nonPromotionQuantity);
-        }
-
-        return orderService.processPurchase(product, quantity, proceedWithPurchase);
-    }
-
-    private boolean agreesToNonPromotion(Product product, int nonPromotionQuantity) {
-        Boolean acceptNonPromotion = inputView.getConfirmPurchaseWithoutPromotion(product.getName(), nonPromotionQuantity);
-        return acceptNonPromotion;
-    }
-
+//    private boolean agreesToNonPromotion(Product product, int nonPromotionQuantity) {
+//        Boolean acceptNonPromotion = inputView.getConfirmPurchaseWithoutPromotion(product.getName(), nonPromotionQuantity);
+//        return acceptNonPromotion;
+//    }
+//    public ReceiptSingleDto handlePurchaseRequest(Product product, int quantity) {
+//           int nonPromotionQuantity = orderService.calculateNonPromotionQuantity(product, quantity);
+//
+//           boolean proceedWithPurchase = true;
+//           if (nonPromotionQuantity > 0) {
+//               proceedWithPurchase = agreesToNonPromotion(product, nonPromotionQuantity);
+//           }
+//
+//           return orderService.processPurchase(product, quantity, proceedWithPurchase);
+//       }
+//
 
 }

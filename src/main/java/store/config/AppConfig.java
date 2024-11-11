@@ -22,7 +22,7 @@ public class AppConfig {
     private final DiscountCalculator discountCalculator = new DiscountCalculator();
     private final StockProcessorFactory stockProcessorFactory = new StockProcessorFactory();
 
-    private final OrderService orderService = new OrderService(wareHouse, discountCalculator, promotionChecker, stockProcessorFactory);
+    private final OrderService orderService = new OrderService(wareHouse, discountCalculator, promotionChecker, stockProcessorFactory, inputView);
     private final OrderController orderController = new OrderController(orderService, inputView, outputView);
 
 
