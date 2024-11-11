@@ -1,4 +1,4 @@
-package store.model.stockProcessStrategy;
+package store.model.processStrategy;
 
 import store.model.Product;
 import store.model.StockProcessor;

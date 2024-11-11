@@ -2,14 +2,12 @@ package store.model;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public class PromotionChecker {
-    public static final LocalDate FIXED_DATE = LocalDate.of(2025, 11, 11); // 원하는 날짜로 고정
+public class Promotions {
     private List<Promotion> promotions;
 
-    public PromotionChecker(List<Promotion> promotions) {
+    public Promotions(List<Promotion> promotions) {
         this.promotions = promotions;
     }
 

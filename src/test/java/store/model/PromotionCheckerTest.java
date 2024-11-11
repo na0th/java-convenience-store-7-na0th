@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PromotionCheckerTest {
-    private PromotionChecker promotionChecker;
+    private Promotions promotions;
     List<Promotion> promotions;
     @BeforeEach
     void setUp() {
@@ -32,7 +32,7 @@ class PromotionCheckerTest {
         );
 
         List<Promotion> promotions = List.of(promotion1, promotion2);
-        promotionChecker = new PromotionChecker(promotions);
+        this.promotions = new Promotions(promotions);
     }
 
     @Test
@@ -41,21 +41,21 @@ class PromotionCheckerTest {
         //given
         //when & then
         // 주의할 점 promotionChecker에 fixedDate랑 LocalDate.now()중 하나 넣어놓음
-        assertTrue(promotionChecker.isPromotionValid("testPromotion1"));
+        assertTrue(promotions.isPromotionValid("testPromotion1"));
     }
     @Test
     @DisplayName("주문 상품이 프로모션에 해당하나, 프로모션 기간에 해당하지 않으면 False 반환")
     void 주문_상품이_프로모션_기간_안에_없을_시_False가_반환되면_성공한다() {
         //given
         //when & then
-        assertFalse(promotionChecker.isPromotionValid("testPromotion2"));
+        assertFalse(promotions.isPromotionValid("testPromotion2"));
     }
     @Test
     @DisplayName("주문 상품이 프로모션 상품에 해당하지 않으면 False 반환")
     void 주문_상품이_프로모션_상품에_해당하지_않으면_False가_반환되면_성공한다() {
         //given
         //when & then
-        assertFalse(promotionChecker.isPromotionValid("notPromotionProduct"));
+        assertFalse(promotions.isPromotionValid("notPromotionProduct"));
     }
 
     @Test
@@ -63,11 +63,11 @@ class PromotionCheckerTest {
     void 프로모션의_buy_get에_따라서_free_item이_제대로_계산되면_성공한다() {
         //given
         //when&then
-        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",8));
-        Assertions.assertThat(1).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",7));
-        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion1",6));
-        Assertions.assertThat(0).isEqualTo(promotionChecker.calculateFreeItems("testPromotion2",6));
-        Assertions.assertThat(1).isEqualTo(promotionChecker.calculateFreeItems("testPromotion2",5));
+        Assertions.assertThat(0).isEqualTo(promotions.calculateFreeItems("testPromotion1",8));
+        Assertions.assertThat(1).isEqualTo(promotions.calculateFreeItems("testPromotion1",7));
+        Assertions.assertThat(0).isEqualTo(promotions.calculateFreeItems("testPromotion1",6));
+        Assertions.assertThat(0).isEqualTo(promotions.calculateFreeItems("testPromotion2",6));
+        Assertions.assertThat(1).isEqualTo(promotions.calculateFreeItems("testPromotion2",5));
     }
 
 

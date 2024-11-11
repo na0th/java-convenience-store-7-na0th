@@ -1,7 +1,7 @@
 package store.model;
 
-import store.model.stockProcessStrategy.PromotionStockStrategy;
-import store.model.stockProcessStrategy.RegularStockStrategy;
+import store.model.processStrategy.PromotionStockStrategy;
+import store.model.processStrategy.RegularStockStrategy;
 
 public class StockProcessorFactory {
 

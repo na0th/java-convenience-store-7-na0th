@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.model.stockProcessStrategy.PromotionStockStrategy;
-import store.model.stockProcessStrategy.RegularStockStrategy;
+import store.model.processStrategy.PromotionStockStrategy;
+import store.model.processStrategy.RegularStockStrategy;
 
 class StockProcessorFactoryTest {
     private StockProcessorFactory factory;

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.dto.response.ReceiptSingleDto;
-import store.model.stockProcessStrategy.RegularStockStrategy;
+import store.model.processStrategy.RegularStockStrategy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
