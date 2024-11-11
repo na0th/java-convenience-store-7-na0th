@@ -3,13 +3,10 @@ package store.model;
 import java.time.LocalDate;
 
 public class Promotion {
-    //TODO 여기서 프로모션에 있는지 확인할 수 있지 않을까?
     private static final int ONE_FREE_ITEM = 1;
     private static final int NO_FREE_ITEM = 0;
 
-
     private String promotionName;
-    //(buy,get) , (startDate,endDate)는 묶는 걸 고려
     private String buy;
     private String get;
     private LocalDate startDate;
@@ -35,7 +32,7 @@ public class Promotion {
         return (currentDate.isEqual(startDate) || currentDate.isAfter(startDate)) &&
                 (currentDate.isEqual(endDate) || currentDate.isBefore(endDate));
     }
-    public int calculateFreeItem(int quantity) {
+    public int calculateFreeItemCount(int quantity) {
         int buyCount = Integer.parseInt(buy);
         int getCount = Integer.parseInt(get);
 

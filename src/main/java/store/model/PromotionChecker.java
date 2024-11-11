@@ -15,7 +15,7 @@ public class PromotionChecker {
 
     public int calculateFreeItems(String promotionName, int quantity) {
         Promotion foundPromotion = findByPromotionName(promotionName);
-        int freeItem = foundPromotion.calculateFreeItem(quantity);
+        int freeItem = foundPromotion.calculateFreeItemCount(quantity);
         return freeItem;
     }
     public Promotion findByPromotionName(String promotionName) {

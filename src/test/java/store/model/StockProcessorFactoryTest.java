@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import store.model.stockProcessStrategy.PromotionStockStrategy;
 import store.model.stockProcessStrategy.RegularStockStrategy;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class StockProcessorFactoryTest {
     private StockProcessorFactory factory;
 
@@ -22,7 +20,7 @@ class StockProcessorFactoryTest {
     void 프로모션_상품이_아니면_일반_재고처리기를_리턴받으면_성공한다() {
         //given
         //when
-        StockProcessor processor = factory.getProcessor(Boolean.FALSE);
+        StockProcessor processor = factory.getStrategy(Boolean.FALSE);
         //then
         Assertions.assertThat(processor).isInstanceOf(RegularStockStrategy.class);
     }
@@ -31,7 +29,7 @@ class StockProcessorFactoryTest {
     void 프로모션_기간에_해당하지_않으면면_일반_재고처리기를_리턴받으면_성공한다() {
         //given
         //when
-        StockProcessor processor = factory.getProcessor(Boolean.FALSE);
+        StockProcessor processor = factory.getStrategy(Boolean.FALSE);
         //then
         Assertions.assertThat(processor).isInstanceOf(RegularStockStrategy.class);
     }
@@ -40,7 +38,7 @@ class StockProcessorFactoryTest {
     void 프로모션_기간에_해당하면_프로모션_재고처리기를_리턴받으면_성공한다() {
         //given
         //when
-        StockProcessor processor = factory.getProcessor(Boolean.TRUE);
+        StockProcessor processor = factory.getStrategy(Boolean.TRUE);
         //then
         Assertions.assertThat(processor).isInstanceOf(PromotionStockStrategy.class);
     }

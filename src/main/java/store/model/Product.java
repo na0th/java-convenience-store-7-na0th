@@ -16,6 +16,10 @@ public class Product {
         this.promotionName = promotionName;
     }
 
+    public static Product create(String name, int price, int regularStock, int promotionStock, String promotionName) {
+        return new Product(name, price, regularStock, promotionStock, promotionName);
+    }
+
     public String getPromotionName() {
         return promotionName;
     }
@@ -34,10 +38,6 @@ public class Product {
 
     public int getPromotionStock() {
         return promotionStock;
-    }
-
-    public static Product create(String name, int price, int regularStock, int promotionStock, String promotionName) {
-        return new Product(name, price, regularStock, promotionStock, promotionName);
     }
     public void decrementRegularStock(int quantity) {
         if (regularStock < quantity) {

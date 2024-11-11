@@ -61,9 +61,9 @@ class PromotionTest {
         //when
 
         //then
-        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItem(quantity));
-        Assertions.assertThat(0).isEqualTo(promotion2.calculateFreeItem(quantity));
-        Assertions.assertThat(1).isEqualTo(promotion3.calculateFreeItem(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItemCount(quantity));
+        Assertions.assertThat(0).isEqualTo(promotion2.calculateFreeItemCount(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion3.calculateFreeItemCount(quantity));
     }
     @Test
     @DisplayName("calculateFreeItem 메서드 테스트")
@@ -73,9 +73,9 @@ class PromotionTest {
         //when
 
         //then
-        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItem(quantity));
-        Assertions.assertThat(0).isEqualTo(promotion2.calculateFreeItem(quantity));
-        Assertions.assertThat(0).isEqualTo(promotion3.calculateFreeItem(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItemCount(quantity));
+        Assertions.assertThat(0).isEqualTo(promotion2.calculateFreeItemCount(quantity));
+        Assertions.assertThat(0).isEqualTo(promotion3.calculateFreeItemCount(quantity));
     }
     @Test
     @DisplayName("calculateFreeItem 메서드 테스트")
@@ -85,8 +85,8 @@ class PromotionTest {
         //when
 
         //then
-        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItem(quantity));
-        Assertions.assertThat(1).isEqualTo(promotion2.calculateFreeItem(quantity));
-        Assertions.assertThat(1).isEqualTo(promotion3.calculateFreeItem(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion.calculateFreeItemCount(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion2.calculateFreeItemCount(quantity));
+        Assertions.assertThat(1).isEqualTo(promotion3.calculateFreeItemCount(quantity));
     }
 }

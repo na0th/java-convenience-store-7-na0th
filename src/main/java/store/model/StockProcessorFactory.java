@@ -5,7 +5,7 @@ import store.model.stockProcessStrategy.RegularStockStrategy;
 
 public class StockProcessorFactory {
 
-    public StockProcessor getProcessor(Boolean promotionValid) {
+    public StockProcessor getStrategy(Boolean promotionValid) {
         if (promotionValid) {
             return new PromotionStockStrategy();
         }
