@@ -2,14 +2,8 @@ package store;
 
 import store.config.AppConfig;
 import store.controller.OrderController;
-import store.dto.request.OrderRequest;
 import store.model.Product;
 import store.model.Promotion;
-import store.model.PromotionChecker;
-import store.model.WareHouse;
-import store.util.Parser;
-import store.view.InputView;
-import store.view.OutputView;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,19 +20,6 @@ public class Application {
         OrderController orderController = appConfig.orderController();
 
         orderController.run();
-
-
-
-//        Map<String, Product> products = productFileHandle();
-//        System.out.println();
-//        WareHouse wareHouse = new WareHouse(products);
-//        wareHouse.getAllProducts();
-//
-//        System.out.println();
-//        List<Promotion> promotions = promotionFileHandle();
-//        PromotionChecker promotionChecker = new PromotionChecker(promotions);
-//        promotionChecker.getAllPromotions();
-
     }
 
     public static Map<String, Product> productFileHandle() {

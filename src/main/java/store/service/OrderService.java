@@ -8,6 +8,8 @@ import store.model.*;
 import store.model.stockProcessStrategy.PromotionStockStrategy;
 import store.view.InputView;
 
+import java.util.Map;
+
 public class OrderService {
     private WareHouse wareHouse;
     private DiscountCalculator discountCalculator;
@@ -15,7 +17,6 @@ public class OrderService {
     private StockProcessorFactory stockProcessorFactory;
     private InputView inputView;
 
-    public OrderService(WareHouse wareHouse, DiscountCalculator discountCalculator, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory) {
     public OrderService(WareHouse wareHouse, DiscountCalculator discountCalculator, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory, InputView inputView) {
         this.wareHouse = wareHouse;
         this.discountCalculator = discountCalculator;
@@ -44,13 +45,13 @@ public class OrderService {
         return message.toString();
     }
 
-    public void purchase(OrderRequest orderRequest, Boolean applyDiscount, Boolean acceptFreeItem) {
     public void finalPurchase(OrderRequest orderRequest, Boolean applyDiscount, Boolean acceptFreeItem) {
         ReceiptDto receiptDto = new ReceiptDto();
 
         for (ProductOrderDto productOrder : orderRequest.getProducts()) {
             String productName = productOrder.getProductName();
             int quantity = productOrder.getProductQuantity();
+
             quantity = conditionallyAddFreeItem(acceptFreeItem, quantity);
 
             Product product;
@@ -63,7 +64,10 @@ public class OrderService {
             boolean promotionValid = promotionChecker.isPromotionValid(product.getPromotionName());
             StockProcessor processor = stockProcessorFactory.getProcessor(promotionValid);
 
+            quantity = adjustQuantityBasedOnNonPromotionAcceptance(product, quantity, processor, productName, promotionValid);
             ReceiptSingleDto receiptSingleDto = wareHouse.processStock(product, quantity, processor);
+            //프로모션에 해당될 때 얘기
+
             receiptDto.addSingleReceipt(receiptSingleDto);
 
         }
@@ -71,18 +75,31 @@ public class OrderService {
 
     }
 
-    public ReceiptSingleDto processPurchase(Product product, int quantity, boolean proceedWithPurchase) {
-        if (!proceedWithPurchase) {
-            System.out.printf("%s 상품 구매가 취소되었습니다.\n", product.getName());
-            return null;  // 구매를 취소하고 null 반환
+    private int adjustQuantityBasedOnNonPromotionAcceptance(Product product, int quantity, StockProcessor processor, String productName, Boolean promotionValid) {
+        if (promotionValid) {
+            Promotion foundPromotion = promotionChecker.findByPromotionName(product.getPromotionName());
+            int promotionGroupSize = foundPromotion.calculatePromotionGroupSize();
+
+            int nonPromotionQuantity = wareHouse.checkNonPromotionQuantity(product, quantity, promotionGroupSize, processor);
+            if (nonPromotionQuantity > 0) {
+                Boolean acceptNonPromotionPurchase = false;
+                try {
+                    acceptNonPromotionPurchase = inputView.getConfirmPurchaseWithoutPromotion(productName, nonPromotionQuantity);
+                } catch (IllegalArgumentException e) {
+                    throw e;
+                }
+                quantity = removeNonPromotionStock(acceptNonPromotionPurchase, quantity, nonPromotionQuantity);
+            }
         }
 
-        // 프로모션 여부에 따라 StockProcessor 선택
-        boolean promotionValid = promotionChecker.isPromotionValid(product.getPromotionName());
-        StockProcessor processor = stockProcessorFactory.getProcessor(promotionValid);
+        return quantity;
+    }
 
-        // 최종적으로 WareHouse에서 재고를 처리하고 영수증 생성
-        return wareHouse.processStock(product, quantity, processor);
+    private int removeNonPromotionStock(Boolean acceptNonPromotionPurchase, int quantity, int nonPromotionQuantity) {
+        if (!acceptNonPromotionPurchase) {
+            quantity -= nonPromotionQuantity;
+        }
+        return quantity;
     }
 
     private int conditionallyAddFreeItem(Boolean acceptFreeItem, int quantity) {
@@ -92,8 +109,27 @@ public class OrderService {
         return quantity;
     }
 
-    public int calculateNonPromotionQuantity(Product product, int quantity) {
-        int group = product.sumRegularAndPromotionQuantity();
-        return product.getNonPromotionQuantity(quantity, group);
+    public Map<String, Product> getAllProducts() {
+        return wareHouse.getAllProducts();
     }
+
+    public void validOrderStock(OrderRequest orderRequest) {
+        for (ProductOrderDto productOrder : orderRequest.getProducts()) {
+            Product product = wareHouse.findByProductName(productOrder.getProductName());
+            int quantity = productOrder.getProductQuantity();
+
+            if (!canPurchaseProduct(product, quantity)) {
+                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+            }
+        }
+    }
+
+    public Boolean canPurchaseProduct(Product product, int quantity) {
+        if (product.sumRegularAndPromotionQuantity() < quantity) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
