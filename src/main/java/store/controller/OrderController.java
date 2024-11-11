@@ -2,7 +2,7 @@ package store.controller;
 
 import store.dto.request.OrderRequest;
 import store.dto.response.ReceiptDto;
-import store.model.DiscountCalculator;
+import store.service.DiscountCalculator;
 import store.service.OrderService;
 import store.util.Parser;
 import store.view.InputView;
@@ -31,7 +31,7 @@ public class OrderController {
             OrderRequest order = createRequestOrder();
             ReceiptDto receipt = processingOrder(order);
             displayReceipt(receipt);
-            
+
 
             if (!askWhatAnotherProducts()) {
                 break;

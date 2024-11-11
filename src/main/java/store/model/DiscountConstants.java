@@ -11,7 +11,7 @@ public enum DiscountConstants {
         this.maxDiscountAmount = maxDiscountAmount;
     }
 
-    int adjustDiscountWithMaxLimit(int currentAmount) {
+    public int adjustDiscountWithMaxLimit(int currentAmount) {
         int discountedAmount = calculateDiscountAmount(currentAmount);
         if (discountedAmount > FIXED_POLICY.maxDiscountAmount) {
             return maxDiscountAmount;
@@ -19,7 +19,7 @@ public enum DiscountConstants {
         return discountedAmount;
     }
 
-    int calculateDiscountAmount(int currentAmount) {
+    public int calculateDiscountAmount(int currentAmount) {
         return (int) (currentAmount * (discountRate / 100.0));
     }
 }

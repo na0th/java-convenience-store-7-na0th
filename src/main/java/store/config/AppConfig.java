@@ -2,6 +2,9 @@ package store.config;
 
 import store.controller.OrderController;
 import store.model.*;
+import store.model.processStrategy.StockProcessorFactory;
+import store.repository.WareHouse;
+import store.service.DiscountCalculator;
 import store.service.OrderService;
 import store.view.InputView;
 import store.view.OutputView;

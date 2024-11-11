@@ -1,4 +1,4 @@
-package store.model;
+package store.service;
 
 import store.dto.response.ReceiptDto;
 import store.dto.response.ReceiptSingleDto;

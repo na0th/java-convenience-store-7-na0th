@@ -1,9 +1,10 @@
-package store.model;
+package store.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.dto.response.ReceiptSingleDto;
+import store.model.Product;
 import store.model.processStrategy.RegularStockStrategy;
 
 import java.util.LinkedHashMap;

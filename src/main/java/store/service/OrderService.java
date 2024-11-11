@@ -6,6 +6,9 @@ import store.dto.response.ReceiptDto;
 import store.dto.response.ReceiptSingleDto;
 import store.model.*;
 import store.model.processStrategy.PromotionStockStrategy;
+import store.model.processStrategy.StockProcessor;
+import store.model.processStrategy.StockProcessorFactory;
+import store.repository.WareHouse;
 import store.view.InputView;
 
 import java.util.Map;

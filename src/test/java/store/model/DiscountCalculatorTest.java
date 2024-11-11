@@ -5,11 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.dto.response.ReceiptDto;
 import store.dto.response.ReceiptSingleDto;
+import store.service.DiscountCalculator;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DiscountCalculatorTest {
     private DiscountCalculator discountCalculator;

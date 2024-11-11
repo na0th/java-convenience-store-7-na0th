@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.model.processStrategy.PromotionStockStrategy;
 import store.model.processStrategy.RegularStockStrategy;
+import store.model.processStrategy.StockProcessor;
+import store.model.processStrategy.StockProcessorFactory;
 
 class StockProcessorFactoryTest {
     private StockProcessorFactory factory;

@@ -1,8 +1,7 @@
 package store.model.processStrategy;
 
 import store.model.Product;
-import store.model.StockProcessor;
-import store.model.WareHouse;
+import store.repository.WareHouse;
 
 public class PromotionStockStrategy implements StockProcessor {
 
