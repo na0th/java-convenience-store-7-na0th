@@ -12,14 +12,12 @@ import java.util.Map;
 
 public class OrderService {
     private WareHouse wareHouse;
-    private DiscountCalculator discountCalculator;
     private PromotionChecker promotionChecker;
     private StockProcessorFactory stockProcessorFactory;
     private InputView inputView;
 
-    public OrderService(WareHouse wareHouse, DiscountCalculator discountCalculator, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory, InputView inputView) {
+    public OrderService(WareHouse wareHouse, PromotionChecker promotionChecker, StockProcessorFactory stockProcessorFactory, InputView inputView) {
         this.wareHouse = wareHouse;
-        this.discountCalculator = discountCalculator;
         this.promotionChecker = promotionChecker;
         this.stockProcessorFactory = stockProcessorFactory;
         this.inputView = inputView;
@@ -33,7 +31,7 @@ public class OrderService {
             int quantity = productOrder.getProductQuantity();
 
             boolean promotionValid = promotionChecker.isPromotionValid(product.getPromotionName());
-            StockProcessor processor = stockProcessorFactory.getProcessor(promotionValid);
+            StockProcessor processor = stockProcessorFactory.getStrategy(promotionValid);
 
             if (promotionValid && product.canProvideFreeItem() && processor instanceof PromotionStockStrategy) {
                 int freeItemCount = promotionChecker.calculateFreeItems(product.getPromotionName(), quantity);
@@ -45,7 +43,7 @@ public class OrderService {
         return message.toString();
     }
 
-    public void finalPurchase(OrderRequest orderRequest, Boolean applyDiscount, Boolean acceptFreeItem) {
+    public ReceiptDto finalPurchase(OrderRequest orderRequest,Boolean acceptFreeItem) {
         ReceiptDto receiptDto = new ReceiptDto();
 
         for (ProductOrderDto productOrder : orderRequest.getProducts()) {
@@ -59,20 +57,30 @@ public class OrderService {
                 product = wareHouse.findByProductName(productName);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return;
+                return null;
             }
             boolean promotionValid = promotionChecker.isPromotionValid(product.getPromotionName());
-            StockProcessor processor = stockProcessorFactory.getProcessor(promotionValid);
+            StockProcessor processor = stockProcessorFactory.getStrategy(promotionValid);
+
+            int promotionGroupSize = calculatePromotionGroupSize(promotionValid, product);
 
             quantity = adjustQuantityBasedOnNonPromotionAcceptance(product, quantity, processor, productName, promotionValid);
-            ReceiptSingleDto receiptSingleDto = wareHouse.processStock(product, quantity, processor);
-            //프로모션에 해당될 때 얘기
+            ReceiptSingleDto receiptSingleDto = wareHouse.processStock(product, quantity, processor, promotionGroupSize);
 
             receiptDto.addSingleReceipt(receiptSingleDto);
 
         }
-        discountCalculator.generateReceipt(applyDiscount, receiptDto);
+        return receiptDto;
 
+    }
+
+    private int calculatePromotionGroupSize(boolean promotionValid, Product product) {
+        int promotionGroupSize = 1;
+        if (promotionValid) {
+            Promotion foundPromotion = promotionChecker.findByPromotionName(product.getPromotionName());
+            promotionGroupSize = foundPromotion.calculatePromotionGroupSize();
+        }
+        return promotionGroupSize;
     }
 
     private int adjustQuantityBasedOnNonPromotionAcceptance(Product product, int quantity, StockProcessor processor, String productName, Boolean promotionValid) {
@@ -125,10 +133,7 @@ public class OrderService {
     }
 
     public Boolean canPurchaseProduct(Product product, int quantity) {
-        if (product.sumRegularAndPromotionQuantity() < quantity) {
-            return false;
-        }
-        return true;
+        return product.sumRegularAndPromotionQuantity() >= quantity;
     }
 
 

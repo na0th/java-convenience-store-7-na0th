@@ -23,68 +23,80 @@ public class OrderController {
         this.discountCalculator = discountCalculator;
     }
 
+
     public void run() {
         while (true) {
             outputView.printProducts(orderService.getAllProducts());
-            String products;
-            Map<String, Integer> parsedProducts;
-            OrderRequest orderRequest;
-            while (true) {
-                try {
-                    products = inputView.getProducts();
-                    parsedProducts = Parser.parse(products);
-                    orderRequest = OrderRequest.from(parsedProducts);
-                    orderService.validOrderStock(orderRequest);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
 
+            OrderRequest orderRequest = createRequestOrder();
+            ReceiptDto receiptDto = processingOrder(orderRequest);
+            applyDiscountAndGenerateReceipt(receiptDto);
 
-            boolean applyDiscount;
-            while (true) {
-                try {
-                    applyDiscount = inputView.getMembershipDiscount();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            while (true) {
-                try{
-                    processOrder(applyDiscount, orderRequest);
-                    break;
-                }catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            Boolean wantAnotherProducts;
-            while (true) {
-                try {
-                    wantAnotherProducts = inputView.getWantAnotherProducts();
-                    break;
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            if (!wantAnotherProducts) {
+            if (!askWhatAnotherProducts()) {
                 break;
             }
 
         }
+
     }
 
-    private void processOrder(Boolean applyDiscount, OrderRequest orderRequest) {
-        String message = orderService.generatePromotionAvailabilityMessage(orderRequest);
-        if (!message.isEmpty()) {
-            outputView.showMessage(message);
-            boolean acceptExtra = inputView.getConfirmAddFreeProducts();
-            orderService.finalPurchase(orderRequest, applyDiscount, acceptExtra);
-        } else {
-            orderService.finalPurchase(orderRequest, applyDiscount, false);
+    private boolean askWhatAnotherProducts() {
+        while (true) {
+            try {
+                return inputView.getWantAnotherProducts();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
+
+    private OrderRequest createRequestOrder() {
+        OrderRequest orderRequest;
+        while (true) {
+            try {
+                String products = inputView.getProducts();
+                Map<String, Integer> parsedProducts = Parser.parse(products);
+                orderRequest = OrderRequest.from(parsedProducts);
+                orderService.validOrderStock(orderRequest);
+                return orderRequest;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private ReceiptDto processingOrder(OrderRequest orderRequest) {
+        String message = orderService.generatePromotionAvailabilityMessage(orderRequest);
+        boolean acceptExtra = false;
+
+        if (!message.isEmpty()) {
+            while (true) {
+                try {
+                    outputView.showMessage(message);
+                    acceptExtra = inputView.getConfirmAddFreeProducts();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        return orderService.finalPurchase(orderRequest, acceptExtra);
+    }
+
+    private void applyDiscountAndGenerateReceipt(ReceiptDto receiptDto) {
+        boolean applyDiscount;
+        while (true) {
+            try {
+                applyDiscount = inputView.getMembershipDiscount();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        discountCalculator.generateReceipt(applyDiscount, receiptDto);
+    }
+
 
 }
