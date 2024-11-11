@@ -1,6 +1,8 @@
 package store.controller;
 
 import store.dto.request.OrderRequest;
+import store.dto.response.ReceiptDto;
+import store.model.DiscountCalculator;
 import store.service.OrderService;
 import store.util.Parser;
 import store.view.InputView;
@@ -12,11 +14,13 @@ public class OrderController {
     private final OrderService orderService;
     private final InputView inputView;
     private final OutputView outputView;
+    private final DiscountCalculator discountCalculator;
 
-    public OrderController(OrderService orderService, InputView inputView, OutputView outputView) {
+    public OrderController(OrderService orderService, InputView inputView, OutputView outputView, DiscountCalculator discountCalculator) {
         this.orderService = orderService;
         this.inputView = inputView;
         this.outputView = outputView;
+        this.discountCalculator = discountCalculator;
     }
 
     public void run() {

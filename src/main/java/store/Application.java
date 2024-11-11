@@ -48,7 +48,6 @@ public class Application {
             e.printStackTrace();
             System.out.println("파일 읽기 중 오류가 발생했습니다: " + e.getMessage());
         }
-        products.values().forEach(System.out::println);
 
         return products;
     }
