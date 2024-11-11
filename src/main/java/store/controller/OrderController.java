@@ -41,21 +41,6 @@ public class OrderController {
 
     }
 
-    private void displayReceipt(ReceiptDto receiptDto) {
-        String receipt = applyDiscountAndGenerateReceipt(receiptDto);
-        outputView.displayReceipt(receipt);
-    }
-
-    private boolean askWhatAnotherProducts() {
-        while (true) {
-            try {
-                return inputView.getWantAnotherProducts();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
     private OrderRequest createRequestOrder() {
         OrderRequest orderRequest;
         while (true) {
@@ -86,7 +71,6 @@ public class OrderController {
                 }
             }
         }
-
         return orderService.finalPurchase(orderRequest, acceptExtra);
     }
 
@@ -102,6 +86,21 @@ public class OrderController {
         }
 
         return discountCalculator.generateReceipt(applyDiscount, receiptDto);
+    }
+
+    private void displayReceipt(ReceiptDto receiptDto) {
+        String receipt = applyDiscountAndGenerateReceipt(receiptDto);
+        outputView.displayReceipt(receipt);
+    }
+
+    private boolean askWhatAnotherProducts() {
+        while (true) {
+            try {
+                return inputView.getWantAnotherProducts();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
 

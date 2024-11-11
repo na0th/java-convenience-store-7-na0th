@@ -53,16 +53,25 @@ public class WareHouse {
         if (quantity > AllStocks) {
             throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
         }
+        int availablePromotionStock = foundProduct.getPromotionStock();
+        int maxPromotionGroups = availablePromotionStock / promotionGroupSize;
+        int maxPromotionQuantity = maxPromotionGroups * promotionGroupSize;
 
-        if (hasEnoughPromotionStock(quantity, foundProduct)) {
-            deductedPromotionStock += quantity;
+        if (quantity <= maxPromotionQuantity) {
+            // 요청한 수량이 프로모션 재고 내에서 전량 제공 가능할 때
+            deductedPromotionStock = quantity;
             foundProduct.decrementPromotionStock(quantity);
         } else {
-            quantity -= foundProduct.getPromotionStock();
-            deductedPromotionStock += foundProduct.getPromotionStock();
-            foundProduct.decrementAllPromotionStock();
-            foundProduct.decrementRegularStock(quantity);
-            deductedRegularStock += quantity;
+            // 프로모션 재고가 부족할 때
+            deductedPromotionStock = maxPromotionQuantity;
+            foundProduct.decrementPromotionStock(deductedPromotionStock);
+
+            // 부족한 수량만큼 일반 재고에서 차감
+            deductedRegularStock = quantity - deductedPromotionStock;
+            if (deductedRegularStock > foundProduct.getRegularStock()) {
+                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요5.");
+            }
+            foundProduct.decrementRegularStock(deductedRegularStock);
         }
 
         ReceiptSingleDto receiptSingleDto = ReceiptSingleDto.create(product, deductedRegularStock, deductedPromotionStock, promotionGroupSize);

@@ -37,10 +37,24 @@ public class OrderService {
             StockProcessor processor = stockProcessorFactory.getStrategy(promotionValid);
 
             if (promotionValid && product.canProvideFreeItem() && processor instanceof PromotionStockStrategy) {
-                int freeItemCount = promotions.calculateFreeItems(product.getPromotionName(), quantity);
-                if (freeItemCount > 0) {
-                    message.append(String.format("%s 상품에 대해 %d개의 추가 무료 아이템을 받을 수 있습니다. 추가 받으시겠습니까? (Y/N)\n", product.getName(), freeItemCount));
+                Promotion promotion = promotions.findByPromotionName(product.getPromotionName());
+                int promotionGroupSize = promotion.calculatePromotionGroupSize();
+                int availablePromotionStock = product.getPromotionStock();
+
+                int maxPromotionGroups = quantity / promotionGroupSize;
+                int maxPromotionStock = maxPromotionGroups * promotionGroupSize;
+                int remainingPromotionStock = availablePromotionStock - maxPromotionStock;
+
+                boolean canProvideAdditionalPromotion = remainingPromotionStock >= promotionGroupSize;
+                boolean isOneItemLacked = (quantity % promotionGroupSize) == promotionGroupSize - 1;
+
+                if (canProvideAdditionalPromotion && isOneItemLacked) {
+                    int freeItemCount = promotions.calculateFreeItems(product.getPromotionName(), quantity);
+                    if (freeItemCount > 0) {
+                        message.append(String.format("%s 상품에 대해 %d개의 추가 무료 아이템을 받을 수 있습니다. 추가 받으시겠습니까? (Y/N)\n", product.getName(), freeItemCount));
+                    }
                 }
+
             }
         }
         return message.toString();
@@ -52,7 +66,6 @@ public class OrderService {
         for (ProductOrderDto productOrder : orderRequest.getProducts()) {
             String productName = productOrder.getProductName();
             int quantity = productOrder.getProductQuantity();
-
             quantity = conditionallyAddFreeItem(acceptFreeItem, quantity);
 
             Product product;
@@ -66,7 +79,6 @@ public class OrderService {
             StockProcessor processor = stockProcessorFactory.getStrategy(promotionValid);
 
             int promotionGroupSize = calculatePromotionGroupSize(promotionValid, product);
-
             quantity = adjustQuantityBasedOnNonPromotionAcceptance(product, quantity, processor, productName, promotionValid);
             ReceiptSingleDto receiptSingleDto = wareHouse.processStock(product, quantity, processor, promotionGroupSize);
 
@@ -94,6 +106,7 @@ public class OrderService {
             int nonPromotionQuantity = wareHouse.checkNonPromotionQuantity(product, quantity, promotionGroupSize, processor);
             if (nonPromotionQuantity > 0) {
                 Boolean acceptNonPromotionPurchase = false;
+
                 try {
                     acceptNonPromotionPurchase = inputView.getConfirmPurchaseWithoutPromotion(productName, nonPromotionQuantity);
                 } catch (IllegalArgumentException e) {
