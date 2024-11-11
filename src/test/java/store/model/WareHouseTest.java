@@ -8,7 +8,7 @@ import store.model.stockProcessStrategy.RegularStockStrategy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -61,7 +61,7 @@ class WareHouseTest {
         String productName = "testProduct3";
         // when & then
         assertThatThrownBy(() -> wareHouse.findByProductName(productName))
-                .isInstanceOf(NoSuchElementException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -74,7 +74,7 @@ class WareHouseTest {
         RegularStockStrategy regularStockStrategy = new RegularStockStrategy();
 
         // when
-        ReceiptSingleDto result = wareHouse.processStock(product, 6, regularStockStrategy);
+        ReceiptSingleDto result = wareHouse.processStock(product, 6, regularStockStrategy,3);
 
         // then
         assertNotNull(result);

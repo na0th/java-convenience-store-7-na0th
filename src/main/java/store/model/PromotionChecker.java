@@ -1,5 +1,7 @@
 package store.model;
 
+import camp.nextstep.edu.missionutils.DateTimes;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class PromotionChecker {
 
     public boolean isPromotionValid(String promotionName) {
         for (Promotion promotion : promotions) {
-            if (promotion.getPromotionName().equals(promotionName) && promotion.isWithinValidDate(LocalDate.now())) {
+            if (promotion.getPromotionName().equals(promotionName) && promotion.isWithinValidDate(DateTimes.now().toLocalDate())) {
 //            if (promotion.getPromotionName().equals(promotionName) && promotion.isWithinValidDate(FIXED_DATE)) {
                 return true;
             }

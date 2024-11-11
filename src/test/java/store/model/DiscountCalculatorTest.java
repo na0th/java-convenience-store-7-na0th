@@ -20,9 +20,9 @@ class DiscountCalculatorTest {
         discountCalculator = new DiscountCalculator();
 
         List<ReceiptSingleDto> receiptSingleDtos = List.of(
-                new ReceiptSingleDto("상품 A", 1000, 14, 0),
-                new ReceiptSingleDto("상품 B", 2000, 1, 0),
-                new ReceiptSingleDto("상품 C", 1500, 0, 0)
+                new ReceiptSingleDto("상품 A", 1000, 14, 0,3),
+                new ReceiptSingleDto("상품 B", 2000, 1, 0,3),
+                new ReceiptSingleDto("상품 C", 1500, 0, 0,3)
         );
         receiptDto = new ReceiptDto();
         receiptDto.addAllReceipts(receiptSingleDtos);

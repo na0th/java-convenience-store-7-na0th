@@ -6,24 +6,24 @@ import store.util.Parser;
 public class InputView {
 
     public String getProducts() {
-        System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]");
+        System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1]\n");
         return Console.readLine();
     }
 
     public Boolean getMembershipDiscount() {
-        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+        System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)\n");
         String input = Console.readLine();
         return Parser.parseYesOrNo(input);
     }
 
     public Boolean getWantAnotherProducts() {
-        System.out.println("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)");
+        System.out.println("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)\n");
         String input = Console.readLine();
         return Parser.parseYesOrNo(input);
     }
 
     public Boolean getConfirmPurchaseWithoutPromotion(String productName, int nonPromotionQuantity) {
-        System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N): ", productName, nonPromotionQuantity);
+        System.out.printf("현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N) \n", productName, nonPromotionQuantity);
         String input = Console.readLine();
         return Parser.parseYesOrNo(input);
     }

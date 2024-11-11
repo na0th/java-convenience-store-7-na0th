@@ -36,11 +36,6 @@ public class OutputView {
         }
     }
 
-    public void printReceipt() {
-        System.out.println("=====W 편의점=====");
-        System.out.println("상품명\t\t수량\t금액");
-    }
-
     public void showMessage(String message) {
         System.out.println(message);
     }
