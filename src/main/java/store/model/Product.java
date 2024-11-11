@@ -45,6 +45,16 @@ public class Product {
         }
         regularStock -= quantity;
     }
+    public void decrementPromotionStock(int quantity) {
+        if (promotionStock < quantity) {
+            throw new IllegalArgumentException("프로모션 재고 수량을 넘게 차감할 수 없습니다" + name);
+        }
+        promotionStock -= quantity;
+    }
+
+    public void decrementAllPromotionStock() {
+        promotionStock = 0;
+    }
 
     public void incrementRegularStock(int quantity) {
         regularStock += quantity;
