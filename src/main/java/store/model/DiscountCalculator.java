@@ -3,7 +3,9 @@ package store.model;
 import store.dto.response.ReceiptDto;
 import store.dto.response.ReceiptSingleDto;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import static store.model.DiscountConstants.FIXED_POLICY;
 
@@ -17,6 +19,7 @@ public class DiscountCalculator {
         int finalAmount = totalPromotionAmount + (totalRegularAmount - discountAmount);
 
         StringBuilder receiptBuilder = new StringBuilder();
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
         receiptBuilder.append("==== 영수증 ====\n");
 
         for (ReceiptSingleDto item : receipt.getReceiptSingleDtos()) {
@@ -29,7 +32,7 @@ public class DiscountCalculator {
         receiptBuilder.append("\n총 프로모션 금액: ").append(totalPromotionAmount).append("원\n");
         receiptBuilder.append("총 일반 금액: ").append(totalRegularAmount).append("원\n");
         receiptBuilder.append("할인 금액: ").append(discountAmount).append("원\n");
-        receiptBuilder.append("최종 결제 금액: ").append(finalAmount).append("원\n");
+        receiptBuilder.append("내실돈").append(numberFormat.format(finalAmount)).append("\n");
         receiptBuilder.append("=================\n");
 
         System.out.println(receiptBuilder.toString());

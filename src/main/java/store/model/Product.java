@@ -41,13 +41,13 @@ public class Product {
     }
     public void decrementRegularStock(int quantity) {
         if (regularStock < quantity) {
-            throw new IllegalArgumentException("재고 수량보다 많이 구매하셨습니다!: " + name);
+            throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
         }
         regularStock -= quantity;
     }
     public void decrementPromotionStock(int quantity) {
         if (promotionStock < quantity) {
-            throw new IllegalArgumentException("프로모션 재고 수량을 넘게 차감할 수 없습니다" + name);
+            throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
         }
         promotionStock -= quantity;
     }

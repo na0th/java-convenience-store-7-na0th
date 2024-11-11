@@ -31,7 +31,7 @@ public class Parser {
             int quantity = parseQuantity(parts[1].trim(), productName);
             productMap.put(productName, quantity);
         } else {
-            throw new IllegalArgumentException("올바르지 않은 포맷" + item);
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
         }
     }
 
@@ -39,7 +39,7 @@ public class Parser {
         try {
             return Integer.parseInt(quantityStr);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("올바르지 않은 수량" + productName);
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
         }
     }
 }
